@@ -1,0 +1,48 @@
+version: '3.8'
+services:
+  propagation-server:
+    image: michaeltaylor3d/dig-propagation-server:1.0.0-alpha.1
+    ports:
+      - "4159:4159"
+    volumes:
+      - ~/.dig/remote:/.dig
+    environment:
+      - DIG_USERNAME=changeme
+      - DIG_PASSWORD=changeme
+      - DIG_FOLDER_PATH=/.dig
+      - PORT=4159
+      - REMOTE_NODE=1
+      - TRUSTED_FULLNODE=<add_ip_address_here_no_port>
+    restart: always
+
+  content-server:
+    image: michaeltaylor3d/dig-content-server:1.0.0-alpha.1
+    ports:
+      - "80:80"
+    volumes:
+      - ~/.dig/remote:/.dig
+    environment:
+      - DIG_FOLDER_PATH=/.dig
+      - PORT=80
+      - REMOTE_NODE=1
+      - TRUSTED_FULLNODE=<add_ip_address_here_no_port>
+    restart: always
+
+  incentive-server:
+    image: michaeltaylor3d/dig-incentive-server:1.0.0-alpha.1
+    ports:
+      - "4160:4160"
+    volumes:
+      - ~/.dig/remote:/.dig
+    environment:
+      - DIG_USERNAME=changeme
+      - DIG_PASSWORD=changeme
+      - DIG_FOLDER_PATH=/.dig
+      - PORT=4160
+      - REMOTE_NODE=1
+      - TRUSTED_FULLNODE=<add_ip_address_here_no_port>
+    restart: always
+
+networks:
+  default:
+    name: dig_network
