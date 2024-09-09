@@ -1,4 +1,4 @@
-import { getStoresList, DataStore } from "dig-sdk";
+import { getStoresList, DataStore } from "@dignetwork/dig-sdk";
 
 export const precacheStoreInfo = async () => {
   const storeList = getStoresList();

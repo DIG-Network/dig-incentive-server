@@ -1,5 +1,5 @@
-import { NconfManager, FullNodePeer, Wallet, ServerCoin } from "dig-sdk";
-import { IncentiveProgramData } from "dig-sdk/dist/types";
+import { NconfManager, FullNodePeer, Wallet, ServerCoin } from "@dignetwork/dig-sdk";
+import { IncentiveProgramData } from "@dignetwork/dig-sdk/dist/types";
 
 import {
   ServerCoin as ServerCoinDriver,

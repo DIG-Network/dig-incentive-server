@@ -1,6 +1,6 @@
 {
   "name": "dig-incentive-server",
-  "version": "0.0.1-alpha.3",
+  "version": "0.0.1-alpha.4",
   "description": "",
   "type": "commonjs",
   "main": "./dist/index.js",
@@ -14,7 +14,7 @@
     "start": "ts-node src/index.ts",
     "server": "ts-node src/server.ts",
     "test": "mocha -r ts-node/register tests.ts",
-    "release": "bash ./scripts/release.sh"
+    "prepare-release": "bash ./scripts/release.sh"
   },
   "author": "",
   "license": "ISC",
@@ -24,10 +24,10 @@
     "LICENSE"
   ],
   "dependencies": {
+    "@dignetwork/dig-sdk": "^0.0.1-alpha.2",
     "async-mutex": "^0.5.0",
     "chia-server-coin": "^0.0.5",
     "datalayer-driver": "^0.1.21",
-    "dig-sdk": "^1.1.0",
     "express": "^4.19.2",
     "lodash": "^4.17.21",
     "toad-scheduler": "^3.0.1"

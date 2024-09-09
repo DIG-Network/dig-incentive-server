@@ -7,7 +7,7 @@ import {
   DigChallenge,
   DataStore,
   getStoresList,
-} from "dig-sdk";
+} from "@dignetwork/dig-sdk";
 
 import { Mutex } from "async-mutex";
 import { IncentiveProgram } from "../utils/IncentiveProgram";
