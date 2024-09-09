@@ -1,5 +1,5 @@
 import fs from "fs";
-import { STORE_PATH } from "../utils/config";
+import { STORE_PATH } from "dig-sdk";
 import { startIncentiveServer } from "./server";
 import tasks from "./tasks";
 

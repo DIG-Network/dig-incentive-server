@@ -1,5 +1,4 @@
-import { getStoresList } from "../../utils/config";
-import { DataStore } from "../../blockchain";
+import { getStoresList, DataStore } from "dig-sdk";
 
 export const precacheStoreInfo = async () => {
   const storeList = getStoresList();

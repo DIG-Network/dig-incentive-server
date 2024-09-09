@@ -1,4 +1,4 @@
-import { Wallet } from "../../blockchain";
+import { Wallet } from "dig-sdk";
 import { getCredentials } from "../utils/authUtils";
 import { Request, Response, NextFunction } from "express";
 
