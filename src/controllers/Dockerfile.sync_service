@@ -1,0 +1,39 @@
+# Use the official Ubuntu image as the base image
+FROM ubuntu:latest
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Install curl, build-essential, pkg-config, and other dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    build-essential \
+    libsecret-1-dev \
+    pkg-config \
+    dbus \
+    dbus-x11 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Generate the machine-id
+RUN dbus-uuidgen > /etc/machine-id
+
+# Disable D-Bus autolaunching to avoid X11 errors
+ENV DBUS_SESSION_BUS_ADDRESS=unix:path=/run/dbus/system_bus_socket
+
+# Install Node.js 20
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g npm@latest
+
+# Copy the current directory contents into the container at /app
+COPY . .
+
+# Install any needed packages specified in package.json
+RUN npm install
+RUN npm i datalayer-driver-linux-x64-gnu
+
+# Expose the port the app runs on (if necessary)
+EXPOSE 4159
+
+# Start D-Bus in the background and then run the application
+CMD (dbus-daemon --session --fork) && npm run start-propagation-server
