@@ -1,13 +1,10 @@
 import _ from "lodash";
 import { Task, SimpleIntervalJob } from "toad-scheduler";
-import { STORE_PATH } from "../../utils/config";
+import { STORE_PATH, DataStore, NconfManager, DigNetwork } from "dig-sdk";
 import { Mutex } from "async-mutex";
 import { IncentiveProgram } from "../utils/IncentiveProgram";
-import { DataStore } from "../../blockchain";
-import { NconfManager } from "../../utils/NconfManager";
 import fs from "fs";
 import path from "path";
-import { DigNetwork } from "../../DigNetwork";
 
 const mutex = new Mutex();
 const nconfManager = new NconfManager("subscriptions.json");
@@ -110,7 +107,6 @@ const runSubscriber = async (): Promise<void> => {
         `Unsubscribing from store ${subscription}, public listing no longer available.`
       );
 
-      
       DigNetwork.unsubscribeFromStore(subscription);
 
       // Remove the storeId from incentivezed subscriptions

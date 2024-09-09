@@ -1,12 +1,17 @@
 import _ from "lodash";
 import { Task, SimpleIntervalJob } from "toad-scheduler";
-import { ServerCoin } from "../../blockchain/ServerCoin";
-import { getStoresList } from "../../utils/config";
+
+import {
+  ServerCoin,
+  DigPeer,
+  DigChallenge,
+  DataStore,
+  getStoresList,
+} from "dig-sdk";
+
 import { Mutex } from "async-mutex";
 import { IncentiveProgram } from "../utils/IncentiveProgram";
 import { hexToUtf8 } from "../utils/hexUtils";
-import { DigPeer, DigChallenge } from "../../DigNetwork";
-import { DataStore } from "../../blockchain";
 
 const mutex = new Mutex();
 

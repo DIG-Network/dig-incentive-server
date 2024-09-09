@@ -1,7 +1,6 @@
-import { NconfManager } from "../../utils/NconfManager";
-import { IncentiveProgramData } from "../../types";
-import { FullNodePeer, Wallet, ServerCoin } from "../../blockchain";
-import { selectUnspentCoins } from "../../blockchain/coins";
+import { NconfManager, FullNodePeer, Wallet, ServerCoin } from "dig-sdk";
+import { IncentiveProgramData } from "dig-sdk/dist/types";
+
 import {
   ServerCoin as ServerCoinDriver,
   getCoinId,
@@ -232,12 +231,11 @@ class IncentiveProgram {
       const peer = await FullNodePeer.connect();
       const wallet = await Wallet.load(data.walletName);
       const publicSyntheticKey = await wallet.getPublicSyntheticKey();
-      const serverCoinCreationCoins = await selectUnspentCoins(
+      const serverCoinCreationCoins = await wallet.selectUnspentCoins(
         peer,
         BigInt(300_000_000), // This value can differ for IncentiveCoin
         BigInt(1000000),
-        [],
-        data.walletName
+        []
       );
 
       // For IncentiveCoin, you may want to modify the epoch or other parameters
@@ -301,7 +299,7 @@ class IncentiveProgram {
     const wallet = await Wallet.load(data.walletName);
     const publicSyntheticKey = await wallet.getPublicSyntheticKey();
 
-    const feeCoins = await selectUnspentCoins(peer, BigInt(0), BigInt(1000000), [], data.walletName);
+    const feeCoins = await wallet.selectUnspentCoins(peer, BigInt(0), BigInt(1000000), []);
 
     const coin = {
       amount: BigInt(data.currentCoin.coin.amount),
