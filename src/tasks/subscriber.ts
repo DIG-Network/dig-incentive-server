@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { Task, SimpleIntervalJob } from "toad-scheduler";
-import { STORE_PATH, DataStore, NconfManager, DigNetwork } from "dig-sdk";
+import { STORE_PATH, DataStore, NconfManager, DigNetwork } from "@dignetwork/dig-sdk";
 import { Mutex } from "async-mutex";
 import { IncentiveProgram } from "../utils/IncentiveProgram";
 import fs from "fs";
