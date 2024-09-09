@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.0.1-alpha.2 (2024-09-09)
+
 ## [1.0.0](https://github.com/Datalayer-Storage/dig-cli/compare/v0.0.49...v1.0.0) (2024-09-06)
 
 
