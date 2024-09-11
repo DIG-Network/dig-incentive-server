@@ -28,9 +28,9 @@ const runSubscriber = async (): Promise<void> => {
     (await nconfManager.getConfigValue<string[]>("subscriptions")) || [];
   let totalDiskSpace = await DataStore.getTotalDiskSpace();
 
-  // Assume unlimited disk space if DISK_SPACE_LIMIT is not set
+  // Cast DISK_SPACE_LIMIT to bigint
   const diskSpaceLimit = process.env.DISK_SPACE_LIMIT
-    ? parseInt(process.env.DISK_SPACE_LIMIT)
+    ? BigInt(process.env.DISK_SPACE_LIMIT)
     : null;
 
   let subscriptionMade = false;
@@ -73,7 +73,7 @@ const runSubscriber = async (): Promise<void> => {
     // Check if there is enough disk space only if diskSpaceLimit is set
     if (
       diskSpaceLimit === null ||
-      BigInt(totalDiskSpace) + bytes <= BigInt(diskSpaceLimit)
+      BigInt(totalDiskSpace) + BigInt(bytes) <= diskSpaceLimit
     ) {
       console.log(`Subscribing to store ${listing.storeId}...`);
 
