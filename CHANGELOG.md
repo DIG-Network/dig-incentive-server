@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-alpha.6](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.5...v0.0.1-alpha.6) (2024-09-11)
+
+
+### Bug Fixes
+
+* address DISK_SPACE_LIMIT as bigint ([6aedf27](https://github.com/DIG-Network/dig-incentive-server/commit/6aedf27fbab76a0f32eb7777820cd3e5a81e0cab))
+
 ### [0.0.1-alpha.5](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.4...v0.0.1-alpha.5) (2024-09-10)
 
 ### [0.0.1-alpha.4](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.3...v0.0.1-alpha.4) (2024-09-09)
