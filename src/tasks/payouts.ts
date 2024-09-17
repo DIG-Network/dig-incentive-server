@@ -45,26 +45,14 @@ const runIncentiveProgram = async (
     console.log(program);
 
     const dataStore = DataStore.from(program.storeId);
-    console.log("!!!!");
     const rootHash = dataStore.Tree.getRoot();
 
     if (process.env.DIG_DEBUG === "1") {
       console.log("Root hash:", rootHash);
     }
 
-    //const storeIntegrityCheck = await dataStore.validate();
-
-    //if (process.env.DIG_DEBUG === "1") {
-    //   console.log("Store integrity check:", storeIntegrityCheck);
-    // }
-
-    // if (!storeIntegrityCheck) {
-    //   throw new Error(`Store ${program.storeId} failed integrity check.`);
-    // }
-
     const rewardThisRound =
-      (BigInt(program.xchRewardPerEpoch) * mojosPerXch) /
-      BigInt(roundsPerEpoch);
+      (BigInt(program.xchRewardPerEpoch) * mojosPerXch) / BigInt(roundsPerEpoch);
 
     if (process.env.DIG_DEBUG === "1") {
       console.log(`Reward for this round: ${rewardThisRound} mojos`);
@@ -77,23 +65,15 @@ const runIncentiveProgram = async (
     }
 
     const serverCoin = new ServerCoin(program.storeId);
-
-    // Get the keys from the store
     const storeKeys = dataStore.Tree.listKeys(rootHash);
     const totalKeys = storeKeys.length;
 
-    // Calculate the sample size needed for 90% confidence
     const sampleSize = calculateSampleSize(totalKeys);
-
     if (process.env.DIG_DEBUG === "1") {
-      console.log(
-        `Total keys: ${totalKeys}, Sampling ${sampleSize} keys for 90% confidence`
-      );
+      console.log(`Total keys: ${totalKeys}, Sampling ${sampleSize} keys for 90% confidence`);
     }
 
-    // Randomly select keys based on the calculated sample size
-    const randomKeysHex =
-      sampleSize > 0 ? _.sampleSize(storeKeys, sampleSize) : storeKeys;
+    const randomKeysHex = sampleSize > 0 ? _.sampleSize(storeKeys, sampleSize) : storeKeys;
     const randomKeys = randomKeysHex.map(hexToUtf8);
 
     if (randomKeys.length === 0) {
@@ -101,183 +81,107 @@ const runIncentiveProgram = async (
     }
 
     if (process.env.DIG_DEBUG === "1") {
-      console.log(
-        `Selected ${randomKeys.length} keys for challenge generation.`
-      );
+      console.log(`Selected ${randomKeys.length} keys for challenge generation.`);
     }
 
-    let winningPeer: DigPeer | null = null;
+    let validPeers: DigPeer[] = [];
+    let payoutMade = false;
 
-    // Loop until a valid peer is found or no more peers are available
-    while (!winningPeer) {
+    // Loop until a payment is made or no more peers are available
+    while (!payoutMade) {
       if (process.env.DIG_DEBUG === "1") {
-        console.log("Sampling a peer from the current epoch...");
+        console.log("Sampling up to 50 peers from the current epoch...");
       }
 
-      // Sample only one peer at a time
-      const serverCoins = await serverCoin.sampleCurrentEpoch(1, peerBlackList);
+      // Sample up to 50 peers
+      const serverCoins = await serverCoin.sampleCurrentEpoch(50, peerBlackList);
 
       if (process.env.DIG_DEBUG === "1") {
         console.log("Server coins:", serverCoins);
       }
 
-      // Exit if no peers are available
       if (serverCoins.length === 0) {
         console.log(`No more peers available for storeId ${program.storeId}`);
-        return;
+        break;
       }
 
-      const peerIp = serverCoins[0];
-      if (process.env.DIG_DEBUG === "1") {
-        console.log(`Sampled peer: ${peerIp}`);
-      }
-
-      const digPeer = new DigPeer(peerIp, program.storeId);
-      let response;
-      try {
-        response = await digPeer.contentServer.headStore();
-      } catch (error: any) {
-        console.error(`Failed to connect to peer ${peerIp}: ${error.message}`);
-        await program.addToBlacklist(peerIp);
-        continue; // Move to next peer
-      }
-
-      if (process.env.DIG_DEBUG === "1") {
-        console.log(`Checking if peer ${peerIp} has the correct store...`);
-      }
-
-      let valid = false;
-
-      if (response.success) {
-        if (process.env.DIG_DEBUG === "1") {
-          console.log(`Peer ${peerIp} responded successfully.`);
+      for (const peerIp of serverCoins) {
+        const digPeer = new DigPeer(peerIp, program.storeId);
+        let response;
+        try {
+          response = await digPeer.contentServer.headStore();
+        } catch (error: any) {
+          console.error(`Failed to connect to peer ${peerIp}: ${error.message}`);
+          await program.addToBlacklist(peerIp);
+          continue;
         }
 
-        const peerGenerationHash = response.headers?.["x-generation-hash"];
+        if (response.success) {
+          const peerGenerationHash = response.headers?.["x-generation-hash"];
+          if (peerGenerationHash === rootHash) {
+            const challengePromises = randomKeysHex.map(async (hexKey) => {
+              try {
+                const digChallenge = new DigChallenge(program.storeId, hexKey, rootHash);
+                const seed = DigChallenge.generateSeed();
+                const challenge = await digChallenge.generateChallenge(seed);
+                const serializedChallenge = DigChallenge.serializeChallenge(challenge);
+                const peerChallengeResponse = await digPeer.contentServer.getKey(
+                  hexToUtf8(hexKey),
+                  rootHash,
+                  serializedChallenge
+                );
+                const expectedChallengeResponse = await digChallenge.createChallengeResponse(challenge);
+                return peerChallengeResponse === expectedChallengeResponse;
+              } catch (error: any) {
+                console.error(`Error during challenge for peer ${peerIp}: ${error.message}`);
+                await program.addToBlacklist(peerIp);
+                return false;
+              }
+            });
 
-        if ((peerGenerationHash as string) === rootHash) {
-          console.log(
-            `Peer ${peerIp} has the correct generation hash: ${peerGenerationHash}`
-          );
-          console.log(
-            `Generating challenges for ${randomKeys.length} random keys for peer ${peerIp}...`
-          );
-
-          // Generate challenges for each random key
-          const challengePromises = randomKeysHex.map(async (hexKey) => {
-            try {
-              const digChallenge = new DigChallenge(
-                program.storeId,
-                hexKey,
-                rootHash
-              );
-
-              const seed = DigChallenge.generateSeed();
-              const challenge = await digChallenge.generateChallenge(seed);
-
-              const serializedChallenge =
-                DigChallenge.serializeChallenge(challenge);
-
-              // Send the challenge to the peer and get their response
-              const peerChallengeResponse = await digPeer.contentServer.getKey(
-                hexToUtf8(hexKey),
-                rootHash,
-                serializedChallenge
-              );
-
-              // Compute your own challenge response (the expected response)
-              const expectedChallengeResponse =
-                await digChallenge.createChallengeResponse(challenge);
-
-              // Compare your response with the peer's response
-              const isValid =
-                peerChallengeResponse === expectedChallengeResponse;
-
-              console.log(
-                `Challenge for key ${hexKey} ${
-                  isValid ? "passed" : "failed"
-                } for peer ${peerIp}`
-              );
-
-              return isValid;
-            } catch (error: any) {
-              console.error(
-                `Error during challenge for peer ${peerIp}: ${error.message}`
-              );
-              await program.addToBlacklist(peerIp);
-              throw error; // Exit the loop on error
-            }
-          });
-
-          // Check if all challenges are valid
-          try {
             const challengeResults = await Promise.all(challengePromises);
-            valid = challengeResults.every((result) => result);
-            if (process.env.DIG_DEBUG === "1") {
-              console.log(
-                `Peer ${peerIp} ${
-                  valid
-                    ? "passed all challenges"
-                    : "failed one or more challenges"
-                }.`
-              );
+            const valid = challengeResults.every((result) => result);
+
+            if (valid) {
+              validPeers.push(digPeer);
+              console.log(`Peer ${peerIp} passed all challenges and is valid.`);
+            } else {
+              console.log(`Peer ${peerIp} failed one or more challenges.`);
+              await program.addToBlacklist(peerIp);
             }
-          } catch (error: any) {
-            console.error(
-              `Challenge validation error for peer ${peerIp}: ${error.message}`
-            );
-            await program.addToBlacklist(peerIp);
-            continue; // Move to next peer
+          } else {
+            console.log(`Peer ${peerIp} has an incorrect generation hash.`);
           }
         } else {
-          if (process.env.DIG_DEBUG === "1") {
-            console.log(
-              `Peer ${peerIp} has an incorrect generation hash: ${peerGenerationHash}`
-            );
-          }
-        }
-      } else {
-        if (process.env.DIG_DEBUG === "1") {
           console.log(`Peer ${peerIp} did not respond successfully.`);
         }
       }
 
-      if (valid) {
-        winningPeer = digPeer;
-        if (process.env.DIG_DEBUG === "1") {
-          console.log(`Valid peer found: ${peerIp}`);
-        }
-      } else {
-        if (process.env.DIG_DEBUG === "1") {
-          console.log(
-            `Peer ${peerIp} was not valid. Adding to blacklist and resampling...`
-          );
-        }
-        await program.addToBlacklist(peerIp);
+      if (validPeers.length > 0) {
+        console.log(`Valid peers found: ${validPeers.length}`);
+        const paymentAddresses = await Promise.all(validPeers.map(async (peer) => await peer.contentServer.getPaymentAddress()));
+
+        await DigPeer.sendEqualBulkPayments(program.walletName, paymentAddresses, rewardThisRound);
+
+        payoutMade = true; // Mark that payment was made
+        await program.setLastEpochPaid(currentEpoch);
+        await program.incrementTotalRoundsCompleted(1);
+        await program.incrementPaymentTotal(rewardThisRound);
+        console.log(`Payout process completed for ${validPeers.length} peers.`);
       }
-    }
 
-    // Send payout to the winning peer
-    if (winningPeer) {
-      console.log(
-        `Sending XCH to ${winningPeer.IpAddress} for store ${program.storeId}...`
-      );
-
-      await winningPeer.sendPayment(program.walletName, rewardThisRound);
-      console.log(`Payout sent to peer: ${winningPeer.IpAddress}`);
-
-      await program.setLastEpochPaid(currentEpoch);
-      await program.incrementTotalRoundsCompleted(1);
-      await program.incrementPaymentTotal(rewardThisRound);
-      console.log(
-        `Payout process completed for peer: ${winningPeer.IpAddress}`
-      );
+      // If no valid peers were found and more peers are available, continue sampling
+      if (validPeers.length === 0 && serverCoins.length === 0) {
+        console.log("No valid peers found and no more peers available.");
+        break;
+      }
     }
   } catch (error: any) {
     console.error(`Error during incentive program: ${error.message}`);
     throw error; // Ensure any error exits the process properly
   }
 };
+
 
 // Function to run payouts for all stores
 const runPayouts = async (): Promise<void> => {
