@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-alpha.8](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.7...v0.0.1-alpha.8) (2024-09-17)
+
+
+### Features
+
+* pay up to 50 mirrors per round ([8f9cc33](https://github.com/DIG-Network/dig-incentive-server/commit/8f9cc334594a8c9cbeb512a105aa383509b77dd7))
+
 ### [0.0.1-alpha.7](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.6...v0.0.1-alpha.7) (2024-09-16)
 
 ### [0.0.1-alpha.6](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.5...v0.0.1-alpha.6) (2024-09-11)
