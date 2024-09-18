@@ -1,4 +1,9 @@
-import { NconfManager, FullNodePeer, Wallet, ServerCoin } from "@dignetwork/dig-sdk";
+import {
+  NconfManager,
+  FullNodePeer,
+  Wallet,
+  ServerCoin,
+} from "@dignetwork/dig-sdk";
 import { IncentiveProgramData } from "@dignetwork/dig-sdk/dist/types";
 
 import {
@@ -45,7 +50,7 @@ class IncentiveProgram {
       );
     }
 
-    const currentEpoch = ServerCoin.getCurrentEpoch();
+    const { epoch: currentEpoch } = ServerCoin.getCurrentEpoch();
     const incentiveCoin = await IncentiveProgram.createCoinForEpoch(data);
     data.currentCoin = {
       coin: {
@@ -92,7 +97,7 @@ class IncentiveProgram {
   }
 
   public async maybeRefreshIncentiveCoin(): Promise<void> {
-    const currentEpoch = ServerCoin.getCurrentEpoch();
+    const { epoch: currentEpoch } = ServerCoin.getCurrentEpoch();
 
     if (this.data.currentCoin?.epoch !== currentEpoch) {
       const incentiveCoin = await IncentiveProgram.createCoinForEpoch(
@@ -239,7 +244,7 @@ class IncentiveProgram {
       );
 
       // For IncentiveCoin, you may want to modify the epoch or other parameters
-      const currentEpoch = ServerCoin.getCurrentEpoch();
+      const { epoch: currentEpoch } = ServerCoin.getCurrentEpoch();
       const epochBasedHint = morphLauncherId(
         Buffer.from(IncentiveProgram.FIXED_STORE_ID, "hex"),
         BigInt(currentEpoch)
@@ -299,7 +304,12 @@ class IncentiveProgram {
     const wallet = await Wallet.load(data.walletName);
     const publicSyntheticKey = await wallet.getPublicSyntheticKey();
 
-    const feeCoins = await wallet.selectUnspentCoins(peer, BigInt(0), BigInt(1000000), []);
+    const feeCoins = await wallet.selectUnspentCoins(
+      peer,
+      BigInt(0),
+      BigInt(1000000),
+      []
+    );
 
     const coin = {
       amount: BigInt(data.currentCoin.coin.amount),
@@ -339,7 +349,7 @@ class IncentiveProgram {
   public static async fetchAllPublicListings(): Promise<
     { storeId: string; xchRewardPerEpoch: number }[]
   > {
-    const currentEpoch = ServerCoin.getCurrentEpoch();
+    const { epoch: currentEpoch } = ServerCoin.getCurrentEpoch();
     const epochBasedHint = morphLauncherId(
       Buffer.from(IncentiveProgram.FIXED_STORE_ID, "hex"),
       BigInt(currentEpoch)
