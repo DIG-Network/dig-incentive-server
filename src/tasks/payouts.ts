@@ -179,11 +179,16 @@ const runIncentiveProgram = async (
 
       if (validPeers.length > 0) {
         console.log(`Valid peers found: ${validPeers.length}`);
-        const paymentAddresses = await Promise.all(
-          validPeers.map(
-            async (peer) => await peer.contentServer.getPaymentAddress()
+        const paymentAddresses = Array.from(
+          new Set(
+            await Promise.all(
+              validPeers.map(
+                async (peer) => await peer.contentServer.getPaymentAddress()
+              )
+            )
           )
         );
+        
 
         // Create a memo for the payment, storeId for the hint for easy lookup
         const { epoch: currentEpoch, round: currentRound } = ServerCoin.getCurrentEpoch();
