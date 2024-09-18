@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-alpha.10](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.9...v0.0.1-alpha.10) (2024-09-18)
+
+
+### Bug Fixes
+
+* dedupe payment addresses ([9b3b1b2](https://github.com/DIG-Network/dig-incentive-server/commit/9b3b1b2c1ce6fa34e904babbda0dd9a8a2c82e4e))
+
 ### [0.0.1-alpha.9](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.8...v0.0.1-alpha.9) (2024-09-18)
 
 
