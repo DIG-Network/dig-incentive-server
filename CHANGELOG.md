@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-alpha.9](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.8...v0.0.1-alpha.9) (2024-09-18)
+
+
+### Features
+
+* add payment hint to mirrors ([8deb544](https://github.com/DIG-Network/dig-incentive-server/commit/8deb5440c44cf112f78815c4b349c848c5eab023))
+
 ### [0.0.1-alpha.8](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.7...v0.0.1-alpha.8) (2024-09-17)
 
 
