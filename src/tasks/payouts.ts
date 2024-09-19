@@ -193,7 +193,9 @@ const runIncentiveProgram = async (
         // Create a memo for the payment, storeId for the hint for easy lookup
         const { epoch: currentEpoch, round: currentRound } = ServerCoin.getCurrentEpoch();
         const paymentHint = DigPeer.createPaymentHint(Buffer.from(program.storeId, "hex"));
-        const memo = [paymentHint, Buffer.from(`Incentive program payout for storeId: ${program.storeId}, epoch ${currentEpoch}, round ${currentRound}`, "utf-8")];
+        const message = Buffer.from(`Incentive program payout for storeId: ${program.storeId}, epoch ${currentEpoch}, round ${currentRound}`, "utf-8");
+        console.log(`Payment hint: ${paymentHint.toString("hex")} - ${message.toString('hex')}: ${message.toString("utf-8")}`);
+        const memo = [paymentHint, message];
 
         await DigPeer.sendEqualBulkPayments(
           program.walletName,
