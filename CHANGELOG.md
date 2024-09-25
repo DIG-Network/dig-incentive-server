@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-alpha.16](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.15...v0.0.1-alpha.16) (2024-09-25)
+
+
+### Bug Fixes
+
+* verify mnemonic ([66b97b0](https://github.com/DIG-Network/dig-incentive-server/commit/66b97b00850c067d68cea7e1e0de37e46b24dcc1))
+
 ### [0.0.1-alpha.15](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.14...v0.0.1-alpha.15) (2024-09-25)
 
 
