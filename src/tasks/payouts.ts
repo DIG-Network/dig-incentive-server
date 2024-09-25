@@ -198,7 +198,7 @@ const runIncentiveProgram = async (
         console.log(`Payment hint: ${paymentHint.toString("hex")} - ${message.toString('hex')}: ${message.toString("utf-8")}`);
         // For the alpha program we are going to forgo the hint and just use the message so people can see it in their chia wallet
         //const memo = [paymentHint, message];
-        const memot = [message]
+        const memo = [message]
 
         await DigPeer.sendEqualBulkPayments(
           program.walletName,
