@@ -8,7 +8,7 @@ export const verifyMnemonic = async (
   next: NextFunction
 ) => {
   try {
-    const wallet = await Wallet.load("default");
+    const wallet = await Wallet.load("default", false);
     const mnemonic = await wallet.getMnemonic();
 
     if (!mnemonic) {
@@ -23,7 +23,7 @@ export const verifyMnemonic = async (
   } catch (error) {
     return res
       .status(500)
-      .send("An error occurred while verifying the mnemonic.");
+      .send("The propagation server does not have a mnemonic set. Please run the cmd `dig remote sync seed`");
   }
 };
 
