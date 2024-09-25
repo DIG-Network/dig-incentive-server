@@ -45,7 +45,8 @@ const runIncentiveProgram = async (
     console.log(program);
 
     const dataStore = DataStore.from(program.storeId);
-    const rootHash = dataStore.Tree.getRoot();
+    const rootHistory = await dataStore.getRootHistory();
+    const rootHash = rootHistory[rootHistory.length - 1].root_hash;
 
     if (process.env.DIG_DEBUG === "1") {
       console.log("Root hash:", rootHash);
