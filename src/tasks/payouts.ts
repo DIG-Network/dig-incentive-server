@@ -148,7 +148,8 @@ const runIncentiveProgram = async (
                 console.error(
                   `Error during challenge for peer ${peerIp}: ${error.message}`
                 );
-                await program.addToBlacklist(peerIp);
+                // Disabling blacklist for alpha program
+                // await program.addToBlacklist(peerIp);
                 return false;
               }
             });
