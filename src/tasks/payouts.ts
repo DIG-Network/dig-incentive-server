@@ -6,6 +6,7 @@ import {
   DigChallenge,
   DataStore,
   getStoresList,
+  Environment
 } from "@dignetwork/dig-sdk";
 import { Mutex } from "async-mutex";
 import { IncentiveProgram } from "../utils/IncentiveProgram";
@@ -36,7 +37,7 @@ const runIncentiveProgram = async (
   currentEpoch: number
 ): Promise<void> => {
   try {
-    if (!process.env.DIG_FOLDER_PATH) {
+    if (!Environment.DIG_FOLDER_PATH) {
       throw new Error("DIG_FOLDER_PATH environment variable not set.");
     }
 

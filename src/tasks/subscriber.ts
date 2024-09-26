@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { Task, SimpleIntervalJob } from "toad-scheduler";
-import { STORE_PATH, DataStore, NconfManager, DigNetwork } from "@dignetwork/dig-sdk";
+import { STORE_PATH, DataStore, NconfManager, DigNetwork, Environment } from "@dignetwork/dig-sdk";
 import { Mutex } from "async-mutex";
 import { IncentiveProgram } from "../utils/IncentiveProgram";
 import fs from "fs";
@@ -29,8 +29,8 @@ const runSubscriber = async (): Promise<void> => {
   let totalDiskSpace = await DataStore.getTotalDiskSpace();
 
   // Cast DISK_SPACE_LIMIT to bigint
-  const diskSpaceLimit = process.env.DISK_SPACE_LIMIT
-    ? BigInt(process.env.DISK_SPACE_LIMIT)
+  const diskSpaceLimit = Environment.DISK_SPACE_LIMIT_BYTES
+    ? BigInt(Environment.DISK_SPACE_LIMIT_BYTES)
     : null;
 
   let subscriptionMade = false;
