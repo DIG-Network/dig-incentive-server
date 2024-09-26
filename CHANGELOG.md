@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-alpha.20](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.19...v0.0.1-alpha.20) (2024-09-26)
+
+
+### Features
+
+* add additional loging to peer challenges ([80df237](https://github.com/DIG-Network/dig-incentive-server/commit/80df2374249a1ce8b85ba2700c2f3685491f8963))
+
 ### [0.0.1-alpha.19](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.18...v0.0.1-alpha.19) (2024-09-25)
 
 ### [0.0.1-alpha.18](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.17...v0.0.1-alpha.18) (2024-09-25)
