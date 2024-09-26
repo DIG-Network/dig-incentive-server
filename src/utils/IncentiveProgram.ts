@@ -60,6 +60,7 @@ class IncentiveProgram {
       },
       epoch: currentEpoch,
       createdAt: new Date().toISOString(),
+      rootHash: ""
     };
 
     await this.nconfManager.setConfigValue(data.storeId, data);
@@ -114,6 +115,7 @@ class IncentiveProgram {
         },
         epoch: currentEpoch,
         createdAt: new Date().toISOString(),
+        rootHash: "",
       };
 
       await IncentiveProgram.nconfManager.setConfigValue(
