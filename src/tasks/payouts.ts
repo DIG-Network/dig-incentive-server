@@ -87,7 +87,10 @@ const runIncentiveProgram = async (
     while (!payoutMade) {
       console.log("Sampling up to 50 peers from the current epoch...");
 
-      const serverCoins = await serverCoin.sampleCurrentEpoch(50, peerBlackList);
+      const serverCoins = await serverCoin.sampleCurrentEpoch(
+        50,
+        peerBlackList
+      );
       console.log(`Peers sampled: ${serverCoins.length}`);
 
       if (serverCoins.length === 0) {
@@ -103,7 +106,9 @@ const runIncentiveProgram = async (
           response = await digPeer.contentServer.headStore();
           console.log(`Peer ${peerIp} responded to headStore request`);
         } catch (error: any) {
-          console.error(`Failed to connect to peer ${peerIp}: ${error.message}`);
+          console.error(
+            `Failed to connect to peer ${peerIp}: ${error.message}`
+          );
           await program.addToBlacklist(peerIp);
           continue;
         }
@@ -133,11 +138,12 @@ const runIncentiveProgram = async (
                     hexKey
                   )}`
                 );
-                const peerChallengeResponse = await digPeer.contentServer.getKey(
-                  hexToUtf8(hexKey),
-                  rootHash,
-                  serializedChallenge
-                );
+                const peerChallengeResponse =
+                  await digPeer.contentServer.getKey(
+                    hexToUtf8(hexKey),
+                    rootHash,
+                    serializedChallenge
+                  );
                 const expectedChallengeResponse =
                   await digChallenge.createChallengeResponse(challenge);
                 console.log(
@@ -177,11 +183,13 @@ const runIncentiveProgram = async (
         console.log(`Valid peers found: ${validPeers.length}`);
         const paymentAddresses = Array.from(
           new Set(
-            await Promise.all(
-              validPeers.map(
-                async (peer) => await peer.contentServer.getPaymentAddress()
+            (
+              await Promise.all(
+                validPeers.map(
+                  async (peer) => await peer.contentServer.getPaymentAddress()
+                )
               )
-            )
+            ).filter((address) => address !== null)
           )
         );
 
