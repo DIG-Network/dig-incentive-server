@@ -161,7 +161,8 @@ const runIncentiveProgram = async (
               console.log(`Peer ${peerIp} passed all challenges and is valid.`);
             } else {
               console.log(`Peer ${peerIp} failed one or more challenges.`);
-              await program.addToBlacklist(peerIp);
+              // Disabling blacklist for alpha program
+              // await program.addToBlacklist(peerIp);
             }
           } else {
             console.log(`Peer ${peerIp} has an incorrect generation hash.`);
