@@ -110,7 +110,7 @@ const runIncentiveProgram = async (
           console.error(
             `Failed to connect to peer ${peerIp}: ${error.message}`
           );
-          await program.addToBlacklist(peerIp);
+         // await program.addToBlacklist(peerIp);
           continue;
         }
 
