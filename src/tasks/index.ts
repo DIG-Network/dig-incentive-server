@@ -1,6 +1,7 @@
 import { ToadScheduler, SimpleIntervalJob } from "toad-scheduler";
 import payouts from './payouts' ;
 import subscriber from './subscriber';
+import restart from './restart';
 
 type JobRegistry = {
   [key: string]: SimpleIntervalJob;
@@ -18,7 +19,7 @@ const addJobToScheduler = (job: SimpleIntervalJob): void => {
 
 const start = (): void => {
   // Add default jobs
-  const defaultJobs: SimpleIntervalJob[] = [payouts, subscriber];
+  const defaultJobs: SimpleIntervalJob[] = [payouts, subscriber, restart];
 
   defaultJobs.forEach((defaultJob) => {
     if (defaultJob.id) {

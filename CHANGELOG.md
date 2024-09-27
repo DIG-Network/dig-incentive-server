@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-alpha.30](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.29...v0.0.1-alpha.30) (2024-09-27)
+
+
+### Features
+
+* restart intervals to fix stuck payments ([d97764d](https://github.com/DIG-Network/dig-incentive-server/commit/d97764d289df110e081f6bc7b42d22f038864f0a))
+
 ### [0.0.1-alpha.29](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.28...v0.0.1-alpha.29) (2024-09-26)
 
 ### [0.0.1-alpha.28](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.27...v0.0.1-alpha.28) (2024-09-26)

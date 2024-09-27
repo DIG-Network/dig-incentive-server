@@ -30,5 +30,5 @@ RUN npm run build
 RUN npm rebuild
 
 # Run the application
-CMD ["node", "dist/index.js"]
+CMD ["node", "dist/cluster.js"]
 
