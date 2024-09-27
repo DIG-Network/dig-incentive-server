@@ -3,7 +3,7 @@ import https from "https";
 import fs from "fs";
 import path from "path";
 import { incentiveRoutes } from "./routes";
-import { Tls } from "chia-server-coin";
+import { Tls } from "@dignetwork/datalayer-driver";
 import { verifyCredentials } from './middleware/verifyMnemonic';
 
 const caCertPath = path.join(__dirname, "ssl", "ca", "chia_ca.crt");
