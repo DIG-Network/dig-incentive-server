@@ -116,9 +116,12 @@ const runIncentiveProgram = async (
 
         if (response.success) {
           const peerGenerationHash = response.headers?.["x-generation-hash"];
-          console.log(
-            `Peer ${peerIp} generation hash: ${peerGenerationHash}, expected: ${rootHash}`
-          );
+
+          if (Environment.DEBUG) {
+            console.log(
+              `Peer ${peerIp} generation hash: ${peerGenerationHash}, expected: ${rootHash}`
+            );
+          }
           if (peerGenerationHash === rootHash) {
             console.log(`Peer ${peerIp} has correct generation hash.`);
 
