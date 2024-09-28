@@ -6,7 +6,7 @@ import {
   DigChallenge,
   DataStore,
   getStoresList,
-  Environment
+  Environment,
 } from "@dignetwork/dig-sdk";
 import { Mutex } from "async-mutex";
 import { IncentiveProgram } from "../utils/IncentiveProgram";
@@ -110,7 +110,7 @@ const runIncentiveProgram = async (
           console.error(
             `Failed to connect to peer ${peerIp}: ${error.message}`
           );
-         // await program.addToBlacklist(peerIp);
+          // await program.addToBlacklist(peerIp);
           continue;
         }
 
@@ -124,7 +124,10 @@ const runIncentiveProgram = async (
 
             const challengePromises = randomKeysHex.map(async (hexKey) => {
               try {
-                console.log(`Generating challenge for key: ${hexKey}`);
+                if (Environment.DEBUG) {
+                  console.log(`Generating challenge for key: ${hexKey}`);
+                }
+
                 const digChallenge = new DigChallenge(
                   program.storeId,
                   hexKey,
@@ -134,11 +137,13 @@ const runIncentiveProgram = async (
                 const challenge = await digChallenge.generateChallenge(seed);
                 const serializedChallenge =
                   DigChallenge.serializeChallenge(challenge);
-                console.log(
-                  `Sending challenge to peer ${peerIp} for key ${hexToUtf8(
-                    hexKey
-                  )}`
-                );
+                if (Environment.DEBUG) {
+                  console.log(
+                    `Sending challenge to peer ${peerIp} for key ${hexToUtf8(
+                      hexKey
+                    )}`
+                  );
+                }
                 const peerChallengeResponse =
                   await digPeer.contentServer.getKey(
                     hexToUtf8(hexKey),
@@ -147,9 +152,11 @@ const runIncentiveProgram = async (
                   );
                 const expectedChallengeResponse =
                   await digChallenge.createChallengeResponse(challenge);
-                console.log(
-                  `Received response from peer ${peerIp}, expected response: ${expectedChallengeResponse}`
-                );
+                if (Environment.DEBUG) {
+                  console.log(
+                    `Received response from peer ${peerIp}, expected response: ${expectedChallengeResponse}`
+                  );
+                }
                 return peerChallengeResponse === expectedChallengeResponse;
               } catch (error: any) {
                 console.error(
