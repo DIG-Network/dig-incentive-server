@@ -17,7 +17,8 @@ const mutex = new Mutex();
 const roundsPerEpoch = 1008; // 1 round every 10 mins starting on the first hour of the epoch
 const mojosPerXch = BigInt(1000000000000);
 
-const Z = 1.645; // Z-score for 90% confidence level
+//const Z = 1.645; // Z-score for 90% confidence level
+const Z = 0.253;
 const p = 0.5; // Estimated proportion of the population with the attribute
 const E = 0.1; // Margin of error (10%)
 
