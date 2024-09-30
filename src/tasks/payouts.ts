@@ -148,6 +148,9 @@ const runIncentiveProgram = async (
 
                 const expectedChallengeResponse =
                   await digChallenge.createChallengeResponse(challenge);
+
+                console.log(`${peerIp} - ${hexToUtf8(hexKey)} - ${peerChallengeResponse} - ${expectedChallengeResponse}`);
+
                 return peerChallengeResponse === expectedChallengeResponse;
               } catch (error: any) {
                 console.error(
