@@ -17,7 +17,7 @@ const mutex = new Mutex();
 const roundsPerEpoch = 1008; // 1 round every 10 mins starting on the first hour of the epoch
 const mojosPerXch = BigInt(1000000000000);
 
-const calculateSampleSize = (totalKeys) => {
+const calculateSampleSize = (totalKeys: number) => {
   // Calculate 5% of total keys
   const sampleSize = Math.ceil(totalKeys * 0.05);
   return sampleSize;
