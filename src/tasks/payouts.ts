@@ -17,20 +17,10 @@ const mutex = new Mutex();
 const roundsPerEpoch = 1008; // 1 round every 10 mins starting on the first hour of the epoch
 const mojosPerXch = BigInt(1000000000000);
 
-//const Z = 1.645; // Z-score for 90% confidence level
-const Z = 0.253;
-const p = 0.5; // Estimated proportion of the population with the attribute
-const E = 0.1; // Margin of error (10%)
-
-// Helper function to calculate sample size based on total keys and 90% confidence
-const calculateSampleSize = (totalKeys: number): number => {
-  const numerator = Z ** 2 * p * (1 - p);
-  const denominator = E ** 2;
-  const sampleSize = numerator / denominator;
-  const adjustedSampleSize =
-    (sampleSize * totalKeys) / (sampleSize + totalKeys - 1);
-
-  return Math.ceil(adjustedSampleSize);
+const calculateSampleSize = (totalKeys: number) => {
+  // Calculate 5% of total keys
+  const sampleSize = Math.ceil(totalKeys * 0.05);
+  return sampleSize;
 };
 
 const runIncentiveProgram = async (
@@ -69,7 +59,7 @@ const runIncentiveProgram = async (
 
     const sampleSize = calculateSampleSize(totalKeys);
     console.log(
-      `Calculated sample size: ${sampleSize} keys for 90% confidence interval`
+      `Calculated sample size: ${sampleSize} keys`
     );
 
     const randomKeysHex =
