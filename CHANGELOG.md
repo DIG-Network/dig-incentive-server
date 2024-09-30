@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-alpha.44](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.43...v0.0.1-alpha.44) (2024-09-30)
+
+
+### Features
+
+* turn on hinted spends ([f65c225](https://github.com/DIG-Network/dig-incentive-server/commit/f65c225f5178cb9d930c54b69110665030a06ee6))
+
 ### [0.0.1-alpha.43](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.42...v0.0.1-alpha.43) (2024-09-30)
 
 

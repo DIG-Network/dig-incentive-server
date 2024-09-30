@@ -322,8 +322,7 @@ const runIncentiveProgram = async (
           )}`
         );
         // For the alpha program we are going to forgo the hint and just use the message so people can see it in their chia wallet
-        //const memo = [paymentHint, message];
-        const memos = [message];
+        const memos = [paymentHint, message];
 
         console.log(
           `Sending equal bulk payments to ${paymentAddresses.length} valid peers...`
