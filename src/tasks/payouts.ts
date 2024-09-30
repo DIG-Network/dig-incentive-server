@@ -206,7 +206,7 @@ const runIncentiveProgram = async (
         //const memo = [paymentHint, message];
         const memos = [message];
 
-        console.log(`Sending equal bulk payments to valid peers...`);
+        console.log(`Sending equal bulk payments to ${paymentAddresses.length} valid peers...`);
         await DigPeer.sendEqualBulkPayments(
           program.walletName,
           paymentAddresses,
