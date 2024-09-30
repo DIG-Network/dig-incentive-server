@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-alpha.43](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.42...v0.0.1-alpha.43) (2024-09-30)
+
+
+### Features
+
+* more parrallel payout processing ([c1b2047](https://github.com/DIG-Network/dig-incentive-server/commit/c1b20476685e91be8e38ec9ca87080fe8d383407))
+
 ### [0.0.1-alpha.42](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.41...v0.0.1-alpha.42) (2024-09-30)
 
 
