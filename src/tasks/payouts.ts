@@ -104,6 +104,8 @@ const runIncentiveProgram = async (
         break;
       }
 
+      console.log(`Sampled ${serverCoins.length} peers for challenge.`);
+
       for (const peerIp of serverCoins) {
         console.log(`Initiating challenge for peer: ${peerIp}`);
         const digPeer = new DigPeer(peerIp, program.storeId);
