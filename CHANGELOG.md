@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-alpha.45](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.44...v0.0.1-alpha.45) (2024-10-01)
+
+
+### Bug Fixes
+
+* increase timeout of head store since it relys on slow fetchCoinINfo ([fcb59aa](https://github.com/DIG-Network/dig-incentive-server/commit/fcb59aa7105ad89ce91bae91ac3c1c9fe7f059b7))
+
 ### [0.0.1-alpha.44](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.43...v0.0.1-alpha.44) (2024-09-30)
 
 
