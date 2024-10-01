@@ -208,7 +208,7 @@ const runIncentiveProgram = async (
                   // Add headStore request to the queue
                   const response = await withTimeout(
                     digPeer.contentServer.headStore(),
-                    10000,
+                    60000,
                     `headStore timed out for peer ${peerIp}`
                   );
                   console.log(`Peer ${peerIp} responded to headStore request`);
