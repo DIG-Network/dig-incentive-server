@@ -183,7 +183,7 @@ const runIncentiveProgram = async (
       console.log("Sampling up to 50 peers from the current epoch...");
 
       const serverCoins = await serverCoin.sampleCurrentEpoch(
-        50,
+        500,
         peerBlackList
       );
 
