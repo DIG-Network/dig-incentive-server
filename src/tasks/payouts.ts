@@ -269,7 +269,7 @@ const runIncentiveProgram = async (
               },
               (result) => {
                 // The callback processes the result
-                console.log(`Callback for peer ${peerIp}, result: ${result}`);
+               // console.log(`Callback for peer ${peerIp}, result: ${result}`);
               }
             );
           })
