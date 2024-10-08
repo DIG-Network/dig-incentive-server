@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-alpha.60](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.59...v0.0.1-alpha.60) (2024-10-08)
+
+
+### Features
+
+* update sdk ([5c32a45](https://github.com/DIG-Network/dig-incentive-server/commit/5c32a45d783adcb2afca44141320a620efbc7247))
+
 ### [0.0.1-alpha.59](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.58...v0.0.1-alpha.59) (2024-10-08)
 
 ### [0.0.1-alpha.58](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.57...v0.0.1-alpha.58) (2024-10-08)
