@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-alpha.59](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.58...v0.0.1-alpha.59) (2024-10-08)
+
 ### [0.0.1-alpha.58](https://github.com/DIG-Network/dig-incentive-server/compare/v0.0.1-alpha.57...v0.0.1-alpha.58) (2024-10-08)
 
 
