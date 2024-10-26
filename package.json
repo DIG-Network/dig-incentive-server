@@ -14,7 +14,8 @@
     "start": "ts-node src/index.ts",
     "server": "ts-node src/server.ts",
     "test": "mocha -r ts-node/register tests.ts",
-    "prepare-release": "bash ./scripts/release.sh"
+    "prepare-release": "bash ./scripts/release.sh",
+    "docker:build:local": "docker build -t dig-content-server:local ."
   },
   "author": "",
   "license": "ISC",
